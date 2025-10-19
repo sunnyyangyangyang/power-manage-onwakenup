@@ -47,7 +47,7 @@ EOF
 %systemd_postun_with_restart set-power-profile-on-wake.service
 
 %files
-%{_unitdir}/set-power-profile-on-wake.service
+/usr/lib/systemd/system/set-power-profile-on-wake.service
 
 %changelog
 * Sun Oct 19 2025 Your Name <your.email@example.com> - 1.0-1
