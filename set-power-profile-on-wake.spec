@@ -9,6 +9,7 @@ URL:            https://example.com
 BuildArch:      noarch
 Requires:       systemd
 Requires:       power-profiles-daemon
+%{?systemd_requires}
 
 %description
 A systemd service that sets the power profile to balanced after the system
