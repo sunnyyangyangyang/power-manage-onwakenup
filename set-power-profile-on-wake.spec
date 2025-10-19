@@ -1,6 +1,6 @@
 Name:           set-power-profile-on-wake
 Version:        1.0
-Release:        2%{?dist}
+Release:        0.8%{?dist}
 Summary:        Set power profile to balanced after system wake
 
 License:        MIT
