@@ -8,7 +8,6 @@ URL:            https://example.com
 
 BuildArch:      noarch
 Requires:       systemd
-Requires:       systemd-rpm-macros
 Requires:       power-profiles-daemon
 
 %description
@@ -22,9 +21,9 @@ wakes from suspend, hibernate, or hybrid-sleep.
 # Nothing to build
 
 %install
-mkdir -p %{buildroot}%{_unitdir}
+mkdir -p %{buildroot}/usr/lib/systemd/system
 
-cat > %{buildroot}%{_unitdir}/set-power-profile-on-wake.service << 'EOF'
+cat > %{buildroot}/usr/lib/systemd/system/set-power-profile-on-wake.service << 'EOF'
 [Unit]
 Description=Set power profile to balanced after wake
 After=suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target
@@ -47,7 +46,7 @@ EOF
 %systemd_postun_with_restart set-power-profile-on-wake.service
 
 %files
-%{_unitdir}/set-power-profile-on-wake.service
+/usr/lib/systemd/system/set-power-profile-on-wake.service
 
 %changelog
 * Sun Oct 19 2025 Your Name <your.email@example.com> - 1.0-1
