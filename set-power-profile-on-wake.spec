@@ -1,6 +1,6 @@
 Name:           set-power-profile-on-wake
 Version:        1.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Set power profile to balanced after system wake
 
 License:        MIT
@@ -37,17 +37,28 @@ WantedBy=suspend.target hibernate.target hybrid-sleep.target suspend-then-hibern
 EOF
 
 %post
-systemctl --no-reload preset set-power-profile-on-wake.service >/dev/null 2>&1 || :
+if [ $1 -eq 1 ]; then
+    # 首次安装
+    systemctl daemon-reload >/dev/null 2>&1 || :
+    systemctl enable set-power-profile-on-wake.service >/dev/null 2>&1 || :
+fi
 
 %preun
-%systemd_preun set-power-profile-on-wake.service
+if [ $1 -eq 0 ]; then
+    # 完全卸载
+    systemctl disable set-power-profile-on-wake.service >/dev/null 2>&1 || :
+    systemctl stop set-power-profile-on-wake.service >/dev/null 2>&1 || :
+fi
 
 %postun
-%systemd_postun set-power-profile-on-wake.service
+systemctl daemon-reload >/dev/null 2>&1 || :
 
 %files
 /usr/lib/systemd/system/set-power-profile-on-wake.service
 
 %changelog
+* Sun Oct 19 2025 Your Name <your.email@example.com> - 1.0-2
+- Fixed scriptlet errors, now uses direct systemctl commands
+
 * Sun Oct 19 2025 Your Name <your.email@example.com> - 1.0-1
 - Initial package
