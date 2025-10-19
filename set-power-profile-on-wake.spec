@@ -37,13 +37,13 @@ WantedBy=suspend.target hibernate.target hybrid-sleep.target suspend-then-hibern
 EOF
 
 %post
-%systemd_post set-power-profile-on-wake.service
+systemctl --no-reload preset set-power-profile-on-wake.service >/dev/null 2>&1 || :
 
 %preun
 %systemd_preun set-power-profile-on-wake.service
 
 %postun
-%systemd_postun_with_restart set-power-profile-on-wake.service
+%systemd_postun set-power-profile-on-wake.service
 
 %files
 /usr/lib/systemd/system/set-power-profile-on-wake.service
