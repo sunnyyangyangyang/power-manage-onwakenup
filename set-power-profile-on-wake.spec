@@ -26,14 +26,14 @@ mkdir -p %{buildroot}%{_unitdir}
 cat > %{buildroot}%{_unitdir}/set-power-profile-on-wake.service << 'EOF'
 [Unit]
 Description=Set power profile to balanced after wake
-After=suspend.target hibernate.target hybrid-sleep.target
+After=suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target
 
 [Service]
 Type=oneshot
 ExecStart=/bin/sh -c "/usr/bin/powerprofilesctl set power-saver && sleep 1 && /usr/bin/powerprofilesctl set balanced"
 
 [Install]
-WantedBy=suspend.target hibernate.target hybrid-sleep.target
+WantedBy=suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target
 EOF
 
 %post
